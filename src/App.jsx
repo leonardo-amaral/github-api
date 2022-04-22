@@ -1,18 +1,20 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { useCallback } from 'react'
-import { memo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getDataUrl } from './services/getDataUrl'
+import '../src/styles/App.css'
+import Aos from 'aos'
 
 function App() {
   const [repositories, setRepositories] = useState([])
   const [languages, setLanguages] = useState([])
 
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+
   async function fetchApi() {
     try {
       const data = await getDataUrl('https://api.github.com/users/leonardo-amaral/repos')
       setRepositories(data)
-      console.log(data)
     }
     catch {
       console.log('Error in Fetch')
@@ -23,7 +25,6 @@ function App() {
     try {
       const data = await getDataUrl(url)
       setLanguages(data)
-      console.log(data)
     }
     catch {
       console.log('Error in Fetch')
@@ -34,8 +35,6 @@ function App() {
     // fetchFunction(url)
     const data = await getDataUrl(url)
     // setLanguages(data)
-    console.log(data)
-
   }, [repositories])
 
   useEffect(() => {
@@ -45,19 +44,18 @@ function App() {
 
   return (
     <>
-      <div className="App">
+      <div className="App" data-aos="fade-up">
         <div className="repo">
           {
             repositories.map((repositorie) => {
 
               return (
-                <div key={repositorie.name} >
-                  <div className='box-repos' key={repositorie.html_url}>
-                    <h1>{repositorie.name}</h1>
+                <div className='box' key={repositorie.name}>
+                  <div className='box-repos'>
+                    <h1 className='title'>{repositorie.name}</h1>
+                    <h2>{repositorie.language}</h2>
+                    <h3>{repositorie.description}</h3>
                     <button onClick={() => fetchFunction(repositorie.languages_url)}>aaaaaaaa</button>
-                    {
-                      callBackFunction(repositorie.languages_url)
-                    }
                   </div>
                 </div>
               )
