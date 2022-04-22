@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { getDataUrl } from './services/getDataUrl'
 import '../src/styles/App.css'
 import Aos from 'aos'
+import Nav from './components/Nav'
 
 function App() {
   const [repositories, setRepositories] = useState([])
@@ -45,6 +46,7 @@ function App() {
   return (
     <>
       <div className="App" data-aos="fade-up">
+        <Nav />
         <div className="repo">
           {
             repositories.map((repositorie) => {
